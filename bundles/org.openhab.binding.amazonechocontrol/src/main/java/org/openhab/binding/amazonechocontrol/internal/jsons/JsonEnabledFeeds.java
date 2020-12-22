@@ -12,8 +12,9 @@
  */
 package org.openhab.binding.amazonechocontrol.internal.jsons;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * The {@link JsonEnabledFeeds} encapsulate the GSON data of the enabled feeds list
@@ -22,5 +23,5 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @NonNullByDefault
 public class JsonEnabledFeeds {
-    public @Nullable JsonFeed @Nullable [] enabledFeeds;
+    public List<JsonFeed> enabledFeeds = List.of();
 }

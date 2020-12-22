@@ -12,6 +12,8 @@
  */
 package org.openhab.binding.amazonechocontrol.internal.jsons;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -26,7 +28,7 @@ import com.google.gson.JsonSyntaxException;
 @NonNullByDefault
 public class JsonActivities {
 
-    public @Nullable Activity @Nullable [] activities;
+    public List<Activity> activities = List.of();
 
     public static class Activity {
         public @Nullable String activityStatus;
@@ -40,7 +42,7 @@ public class JsonActivities {
         public @Nullable String providerInfoDescription;
         public @Nullable String registeredCustomerId;
         public @Nullable Object sourceActiveUsers;
-        public @Nullable SourceDeviceId @Nullable [] sourceDeviceIds;
+        public List<SourceDeviceId> sourceDeviceIds = List.of();
         public @Nullable String utteranceId;
         public @Nullable Long version;
 

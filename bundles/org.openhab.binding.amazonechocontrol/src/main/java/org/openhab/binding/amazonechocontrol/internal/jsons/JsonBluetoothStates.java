@@ -12,6 +12,7 @@
  */
 package org.openhab.binding.amazonechocontrol.internal.jsons;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
@@ -50,7 +51,7 @@ public class JsonBluetoothStates {
         public boolean connected;
         public @Nullable String deviceClass;
         public @Nullable String friendlyName;
-        public @Nullable String @Nullable [] profiles;
+        public List<String> profiles = List.of();
     }
 
     public static class BluetoothState {
@@ -59,6 +60,6 @@ public class JsonBluetoothStates {
         public @Nullable String friendlyName;
         public boolean gadgetPaired;
         public boolean online;
-        public @Nullable PairedDevice @Nullable [] pairedDeviceList;
+        public List<PairedDevice> pairedDeviceList = List.of();
     }
 }

@@ -12,7 +12,7 @@
  */
 package org.openhab.binding.amazonechocontrol.internal.jsons;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
@@ -46,11 +46,11 @@ public class JsonSmartHomeDevices {
         public @Nullable String reachability;
         public @Nullable String entityId;
         public @Nullable SmartHomeDeviceNetworkState applianceNetworkState;
-        public @Nullable SmartHomeCapability @Nullable [] capabilities;
+        public List<SmartHomeCapability> capabilities = List.of();
         public @Nullable JsonSmartHomeTag tags;
-        public @Nullable String @Nullable [] applianceTypes;
-        public @Nullable JsonSmartHomeDeviceAlias @Nullable [] aliases;
-        public @Nullable SmartHomeDevice @Nullable [] groupDevices;
+        public List<String> applianceTypes = List.of();
+        public List<JsonSmartHomeDeviceAlias> aliases = List.of();
+        public List<SmartHomeDevice> groupDevices = List.of();
         public @Nullable String connectedVia;
         public @Nullable DriverIdentity driverIdentity;
 
@@ -60,11 +60,10 @@ public class JsonSmartHomeDevices {
                     + applianceId + '\'' + ", manufacturerName='" + manufacturerName + '\'' + ", friendlyDescription='"
                     + friendlyDescription + '\'' + ", modelName='" + modelName + '\'' + ", friendlyName='"
                     + friendlyName + '\'' + ", reachability='" + reachability + '\'' + ", entityId='" + entityId + '\''
-                    + ", applianceNetworkState=" + applianceNetworkState + ", capabilities="
-                    + Arrays.toString(capabilities) + ", tags=" + tags + ", applianceTypes="
-                    + Arrays.toString(applianceTypes) + ", aliases=" + Arrays.toString(aliases) + ", groupDevices="
-                    + Arrays.toString(groupDevices) + ", connectedVia='" + connectedVia + '\'' + ", driverIdentity="
-                    + driverIdentity + '}';
+                    + ", applianceNetworkState=" + applianceNetworkState + ", capabilities=" + capabilities + ", tags="
+                    + tags + ", applianceTypes=" + applianceTypes + ", aliases=" + aliases + ", groupDevices="
+                    + groupDevices + ", connectedVia='" + connectedVia + '\'' + ", driverIdentity=" + driverIdentity
+                    + '}';
         }
     }
 

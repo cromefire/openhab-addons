@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
 
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
@@ -171,25 +170,24 @@ public class SmartHomeDevicesDiscovery extends AbstractDiscoveryService {
                     continue;
                 }
 
-                JsonSmartHomeCapabilities.SmartHomeCapability[] capabilities = shd.capabilities;
-                if (capabilities == null || Stream.of(capabilities).noneMatch(capability -> capability != null
-                        && Constants.SUPPORTED_INTERFACES.contains(capability.interfaceName))) {
+                List<JsonSmartHomeCapabilities.SmartHomeCapability> capabilities = shd.capabilities;
+                if (capabilities.stream()
+                        .noneMatch(capability -> Constants.SUPPORTED_INTERFACES.contains(capability.interfaceName))) {
                     // No supported interface found
                     continue;
                 }
 
                 thingUID = new ThingUID(THING_TYPE_SMART_HOME_DEVICE, bridgeThingUID, entityId.replace(".", "-"));
 
-                JsonSmartHomeDeviceAlias[] aliases = shd.aliases;
+                List<JsonSmartHomeDeviceAlias> aliases = shd.aliases;
                 if ("Amazon".equals(shd.manufacturerName) && driverIdentity != null
                         && "SonarCloudService".equals(driverIdentity.identifier)) {
                     deviceName = "Alexa Guard on " + shd.friendlyName;
                 } else if ("Amazon".equals(shd.manufacturerName) && driverIdentity != null
                         && "OnGuardSmartHomeBridgeService".equals(driverIdentity.identifier)) {
                     deviceName = "Alexa Guard";
-                } else if (aliases != null && aliases.length > 0 && aliases[0] != null
-                        && aliases[0].friendlyName != null) {
-                    deviceName = aliases[0].friendlyName;
+                } else if (!aliases.isEmpty() && aliases.get(0).friendlyName != null) {
+                    deviceName = aliases.get(0).friendlyName;
                 } else {
                     deviceName = shd.friendlyName;
                 }

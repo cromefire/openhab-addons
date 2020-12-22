@@ -12,6 +12,8 @@
  */
 package org.openhab.binding.amazonechocontrol.internal.jsons;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -30,12 +32,12 @@ public class JsonSmartHomeCapabilities {
     }
 
     public static class Properties {
-        public @Nullable Property @Nullable [] supported;
+        public List<Property> supported = List.of();
     }
 
     public static class Property {
         public @Nullable String name;
     }
 
-    public @Nullable SmartHomeCapability @Nullable [] capabilites;
+    public List<SmartHomeCapability> capabilites = List.of();
 }

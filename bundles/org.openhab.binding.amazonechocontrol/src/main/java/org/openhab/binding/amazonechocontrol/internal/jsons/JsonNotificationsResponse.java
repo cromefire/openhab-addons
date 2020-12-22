@@ -12,8 +12,9 @@
  */
 package org.openhab.binding.amazonechocontrol.internal.jsons;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * The {@link JsonNotificationsResponse} encapsulate the GSON data for the result of a notifications request
@@ -22,5 +23,5 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @NonNullByDefault
 public class JsonNotificationsResponse {
-    public JsonNotificationResponse @Nullable [] notifications;
+    public List<JsonNotificationResponse> notifications = List.of();
 }

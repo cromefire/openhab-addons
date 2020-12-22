@@ -12,8 +12,9 @@
  */
 package org.openhab.binding.amazonechocontrol.internal.jsons;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * The {@link JsonNotificationSounds} encapsulate the GSON data for a notification sounds
@@ -22,5 +23,5 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 @NonNullByDefault
 public class JsonNotificationSounds {
-    public @Nullable JsonNotificationSound @Nullable [] notificationSounds;
+    public List<JsonNotificationSound> notificationSounds = List.of();
 }

@@ -39,15 +39,19 @@ import com.google.gson.JsonObject;
  */
 @NonNullByDefault
 public abstract class HandlerBase {
-    protected @Nullable SmartHomeDeviceHandler smartHomeDeviceHandler;
+    protected SmartHomeDeviceHandler smartHomeDeviceHandler;
     protected Map<String, ChannelInfo> channels = new HashMap<>();
+
+    public HandlerBase(SmartHomeDeviceHandler smartHomeDeviceHandler) {
+        this.smartHomeDeviceHandler = smartHomeDeviceHandler;
+    }
 
     protected abstract ChannelInfo @Nullable [] findChannelInfos(SmartHomeCapability capability, String property);
 
     public abstract void updateChannels(String interfaceName, List<JsonObject> stateList, UpdateChannelResult result);
 
     public abstract boolean handleCommand(Connection connection, SmartHomeDevice shd, String entityId,
-            SmartHomeCapability[] capabilties, String channelId, Command command)
+            List<SmartHomeCapability> capabilities, String channelId, Command command)
             throws IOException, InterruptedException;
 
     public abstract @Nullable StateDescription findStateDescription(String channelId,
@@ -59,38 +63,28 @@ public abstract class HandlerBase {
 
     public abstract String[] getSupportedInterface();
 
-    SmartHomeDeviceHandler getSmartHomeDeviceHandler() throws IllegalStateException {
-        SmartHomeDeviceHandler smartHomeDeviceHandler = this.smartHomeDeviceHandler;
-        if (smartHomeDeviceHandler == null) {
-            throw new IllegalStateException("Handler not initialized");
-        }
+    SmartHomeDeviceHandler getSmartHomeDeviceHandler() {
         return smartHomeDeviceHandler;
     }
 
-    public Collection<ChannelInfo> initialize(SmartHomeDeviceHandler smartHomeDeviceHandler,
-            List<SmartHomeCapability> capabilities) {
-        this.smartHomeDeviceHandler = smartHomeDeviceHandler;
+    public Collection<ChannelInfo> initialize(List<SmartHomeCapability> capabilities) {
         Map<String, ChannelInfo> channels = new HashMap<>();
         for (SmartHomeCapability capability : capabilities) {
             Properties properties = capability.properties;
             if (properties != null) {
-                Property @Nullable [] supported = properties.supported;
-                if (supported != null) {
-                    for (Property property : supported) {
-                        if (property != null) {
-                            String name = property.name;
-                            if (name != null) {
-                                ChannelInfo[] channelInfos = findChannelInfos(capability, name);
-                                if (channelInfos != null) {
-                                    for (ChannelInfo channelInfo : channelInfos) {
-                                        if (channelInfo != null) {
-                                            channels.put(channelInfo.channelId, channelInfo);
-                                        }
-                                    }
+                for (Property property : properties.supported) {
+                    String name = property.name;
+                    if (name != null) {
+                        ChannelInfo[] channelInfos = findChannelInfos(capability, name);
+                        if (channelInfos != null) {
+                            for (ChannelInfo channelInfo : channelInfos) {
+                                if (channelInfo != null) {
+                                    channels.put(channelInfo.channelId, channelInfo);
                                 }
                             }
                         }
                     }
+
                 }
             }
         }
@@ -98,19 +92,12 @@ public abstract class HandlerBase {
         return channels.values();
     }
 
-    protected boolean containsCapabilityProperty(SmartHomeCapability[] capabilties, String propertyName) {
-        for (SmartHomeCapability capability : capabilties) {
+    protected boolean containsCapabilityProperty(List<SmartHomeCapability> capabilities, String propertyName) {
+        for (SmartHomeCapability capability : capabilities) {
             Properties properties = capability.properties;
             if (properties != null) {
-                Property @Nullable [] supportedProperties = properties.supported;
-                if (supportedProperties != null) {
-                    for (Property property : supportedProperties) {
-                        if (property != null) {
-                            if (propertyName != null && propertyName.equals(property.name)) {
-                                return true;
-                            }
-                        }
-                    }
+                if (properties.supported.stream().anyMatch(p -> propertyName.equals(p.name))) {
+                    return true;
                 }
             }
         }

@@ -12,8 +12,9 @@
  */
 package org.openhab.binding.amazonechocontrol.internal.jsons;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  *
@@ -23,8 +24,8 @@ import org.eclipse.jdt.annotation.Nullable;
 @NonNullByDefault
 public class JsonSmartHomeGroupIdentity {
     public static class SmartHomeGroupIdentity {
-        public @Nullable String @Nullable [] groupIdentity;
+        public List<String> groupIdentity = List.of();
     }
 
-    public @Nullable SmartHomeGroupIdentity @Nullable [] groupIdentity;
+    public List<SmartHomeGroupIdentity> groupIdentity = List.of();
 }
