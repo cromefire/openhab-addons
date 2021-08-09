@@ -13,8 +13,6 @@ This binding allows you to integrate, view, control and configure the Nuki Bridg
 
 It is absolutely recommended to configure static IP addresses for both, the openHAB server and the Nuki Bridge!  
 
-You can configure the Nuki Binding either by using Paper UI or manually through text files.  
-
 ### Nuki Bridge Callback
 
 The Nuki Binding will manage the required callback from the Nuki Bridge to the openHAB server if *manageCallbacks* is set to `true`.
@@ -95,7 +93,7 @@ sitemap nuki label="Nuki Smart Lock" {
 		Switch item=Frontdoor_Lock
 	}
 	Frame label="Channel State used for lock actions" {
-		Switch item=Frontdoor_State mappings=[2="Unlock", 7="Unlatch", 1002="LnGo", 1007="LnGoU", 4="Lock"]
+		Switch item=Frontdoor_LockState mappings=[2="Unlock", 7="Unlatch", 1002="LnGo", 1007="LnGoU", 4="Lock"]
 	}
 	Frame label="Channel State" {
 		Text item=Frontdoor_LockState label="Lock State [MAP(nukilockstates.map):%s]"
